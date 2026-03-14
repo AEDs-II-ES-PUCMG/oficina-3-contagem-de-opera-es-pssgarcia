@@ -41,7 +41,8 @@ public class App {
     static int codigo1(int[] vetor) {
         int resposta = 0;
         for (int i = 0; i < vetor.length; i += 2) {
-            resposta += vetor[i]%2;
+            operacoes++;
+            resposta += vetor[i]%2; // Operação relevante: Soma do resultado do módulo por 2 dos elementos de índice par do vetor
         }
         return resposta;
     }
@@ -55,7 +56,8 @@ public class App {
         int contador = 0;
         for (int k = (vetor.length - 1); k > 0; k /= 2) {
             for (int i = 0; i <= k; i++) {
-                contador++;
+                operacoes++;
+                contador++; // Operação relevante: Incremento do contador
             }
 
         }
@@ -71,12 +73,14 @@ public class App {
             int menor = i;
             for (int j = i + 1; j < vetor.length; j++) {
                 if (vetor[j] < vetor[menor])
+                    operacoes++;
                     menor = j;
             }
             int temp = vetor[i];
             vetor[i] = vetor[menor];
-            vetor[menor] = temp;
+            vetor[menor] = temp; 
         }
+        // Operação relevante: Comparações
     }
 
     /**
@@ -85,10 +89,12 @@ public class App {
      * @return Um inteiro que significa...
      */
     static int codigo4(int n) {
+        operacoes++;
         if (n <= 2)
             return 1;
         else
             return codigo4(n - 1) + codigo4(n - 2);
+        // Operação relevante: Calcular o fibonnaci recursivamente
     }
 
     /**
@@ -105,6 +111,37 @@ public class App {
         
     }
     public static void main(String[] args) {
-        
+        for (int i = 0; i < tamanhosTesteGrande.length; i++) {
+            int[] vetor = gerarVetor(tamanhosTesteGrande[i]);
+            operacoes = 0;
+            long inicio = System.nanoTime();
+            int resposta = codigo1(vetor);
+            long fim = System.nanoTime();
+            System.out.printf("Teste 1 - Tamanho: %d, Resposta: %d, Operações: %d, Tempo: %.2f ms\n", vetor.length, resposta, operacoes, (fim - inicio)*nanoToMilli);
+
+            operacoes = 0;
+            inicio = System.nanoTime();
+            int resposta2 = codigo2(vetor);
+            long fim2 = System.nanoTime();
+            System.out.printf("Teste 2 - Tamanho: %d, Resposta: %d, Operações: %d, Tempo: %.2f ms\n", vetor.length, resposta2, operacoes, (fim2 - inicio)*nanoToMilli);
+        }
+
+        for (int i = 0; i < tamanhosTesteMedio.length; i++) {
+            int[] vetor = gerarVetor(tamanhosTesteMedio[i]);
+            operacoes = 0;
+            long inicio = System.nanoTime();
+            codigo3(vetor);
+            long fim3 = System.nanoTime();
+            System.out.printf("Teste 3 - Tamanho: %d, Operações: %d, Tempo: %.2f ms\n", vetor.length, operacoes, (fim3 - inicio)*nanoToMilli);
+        }
+
+        for (int i = 0; i < tamanhosTestePequeno.length; i++) {
+            int n = tamanhosTestePequeno[i];
+            operacoes = 0;
+            long inicio = System.nanoTime();
+            int resposta4 = codigo4(n);
+            long fim4 = System.nanoTime();
+            System.out.printf("Teste 4 - n: %d, Resposta: %d, Operações: %d, Tempo: %.2f ms\n", n, resposta4, operacoes, (fim4 - inicio)*nanoToMilli);
+        }
     }
 }
