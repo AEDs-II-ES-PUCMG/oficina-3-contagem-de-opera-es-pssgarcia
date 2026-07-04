@@ -5,5 +5,7 @@ Oficinas e atividade pontuada realizada em AED II, tendo em vista algoritmos de 
 ## Aluno 
 
 * Pedro Soares de Souza Garcia
+* Miguel Lima Barcellos
+
 
 
